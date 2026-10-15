@@ -1,0 +1,19 @@
+
+
+<div class="car-list-container">
+      <h2>Car Inventory</h2>
+
+      @if (cars$ | async; as cars) {
+        @if (cars.length > 0) {
+          <div class="grid">
+            @for (car of cars; track car._id) {
+             <app-car-card [car]="car" />
+            }
+        </div>
+        } @else {
+          <p>No cars available at the moment.</p>
+        }
+      } @else {
+        <p>Loading cars...</p>
+      }
+    </div>
