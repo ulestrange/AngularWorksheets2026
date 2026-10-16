@@ -1,1 +1,9 @@
-<p>car-details works!</p>
+@if (car$ | async; as car)
+{
+    {{car.model}} - {{car.make}} - {{car.year}}
+}
+@else 
+{
+    <p>Loading car details...</p>
+}
+
