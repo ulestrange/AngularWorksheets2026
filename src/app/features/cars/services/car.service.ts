@@ -18,4 +18,9 @@ private readonly apiUrl = 'http://localhost:3006/api/v1/cars'; // this should be
   }
 
 
+  getCarById(id: string): Observable<Car> {
+    console.log ('getting car by id:', `${this.apiUrl}/${id}`);
+    return this.http.get<Car>(`${this.apiUrl}/${id}`);
+  }
+
 }
