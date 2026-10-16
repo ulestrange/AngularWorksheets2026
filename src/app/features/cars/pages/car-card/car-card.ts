@@ -12,6 +12,4 @@ export class CarCard {
 
   car = input.required<Car>();
 
-
-
 }
