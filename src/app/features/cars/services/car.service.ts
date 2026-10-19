@@ -41,12 +41,10 @@ private readonly apiUrl = 'http://localhost:3006/api/v1/cars'; // this should be
 
       if (error.status == 401 || error.status == 403) {
 
-        console.log('authorisation issue ' , error.status );
+        console.error('authorisation issue ' , error.status );
          return throwError(() => new Error('You are not authorised for that action'));
 
       }
-
-
       console.error(
         `Backend returned code ${error.status}, body was: `, error.error);
     }

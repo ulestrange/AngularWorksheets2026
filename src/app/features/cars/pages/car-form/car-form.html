@@ -1,33 +1,31 @@
-<p>car-form works!</p>
+
 
 <form [formGroup]="carForm" (ngSubmit)="onSubmit()" class="car-form">
   <h2>Car Details Form</h2>
 
-  <!-- Hidden or Optional ID Field -->
-  <input type="hidden" formControlName="_id">
 
-  <!-- Make Field -->
+
   <div class="form-group">
     <label for="make">Make:</label>
     <input id="make" type="text" formControlName="make" placeholder="e.g. Toyota" />
     
-    @if (carForm.get('make')?.invalid && carForm.get('make')?.touched) {
+    <!-- @if (carForm.get('make')?.invalid && carForm.get('make')?.touched) {
       <div class="error">
         Make is required (minimum 2 characters).
       </div>
-    }
+    } -->
   </div>
 
-  <!-- Model Field -->
+
   <div class="form-group">
     <label for="model">Model:</label>
     <input id="model" type="text" formControlName="model" placeholder="e.g. Corolla" />
     
-    @if (carForm.get('model')?.invalid && carForm.get('model')?.touched) {
+    <!-- @if (carForm.get('model')?.invalid && carForm.get('model')?.touched) {
       <div class="error">
         Model is required.
       </div>
-    }
+    } -->
   </div>
 
   <!-- Year Field -->
@@ -35,16 +33,19 @@
     <label for="year">Year:</label>
     <input id="year" type="number" formControlName="year" placeholder="e.g. 2022" />
     
-    @if (carForm.get('year')?.invalid && carForm.get('year')?.touched) {
+    <!-- @if (carForm.get('year')?.invalid && carForm.get('year')?.touched) {
       <div class="error">
         Please enter a valid car year.
       </div>
-    }
+    } -->
   </div>
 
   <!-- Action Buttons -->
   <div class="button-group">
-    <button type="submit" [disabled]="carForm.invalid">Save Car</button>
+    <button type="submit"
+     [disabled]="carForm.invalid"
+     >
+     Save Car</button>
 
   </div>
 </form>

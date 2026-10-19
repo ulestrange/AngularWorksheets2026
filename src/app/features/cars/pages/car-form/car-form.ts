@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Car } from '../../models/car';
+import { CarService } from '../../services/car.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-car-form',
@@ -10,9 +12,15 @@ import { Car } from '../../models/car';
 })
 export class CarForm {
 
-   private fb = inject(FormBuilder);
+  private carService = inject(CarService);
 
-   carForm = this.fb.group({
+  private router = inject(Router);
+
+
+   private formBuilder = inject(FormBuilder);
+
+
+   carForm = this.formBuilder.group({
      make: ['', Validators.required],
      model: ['', Validators.required],
      year: ['']
@@ -20,13 +28,21 @@ export class CarForm {
 
 
 onSubmit(): void {
-    if (this.carForm.valid) {
-      // Cast the form value directly to your Car interface
+    // if (this.carForm.valid) {
+    //   // Cast the form value directly to your Car interface
       const carData: Car = this.carForm.value as Car;
       console.log('Submitted Car:', carData);
       
-      // TODO: Send carData to your backend service
-    } 
+      this.carService.addCar(carData).subscribe({
+        next: (response) => {
+          console.log('Car added successfully:', response);
+          this.router.navigate(['/cars']); 
+        },
+        error: (error) => {
+          console.error('Error adding car:', error);
+        }
+      });
+    }
   }
 
-}
+
