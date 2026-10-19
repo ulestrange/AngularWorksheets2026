@@ -23,14 +23,18 @@ export class CarForm {
    carForm = this.formBuilder.group({
      make: ['', Validators.required],
      model: ['', Validators.required],
-     year: ['']
+     year: this.formBuilder.control<number|null> (null)
    });
 
 
 onSubmit(): void {
     // if (this.carForm.valid) {
     //   // Cast the form value directly to your Car interface
-      const carData: Car = this.carForm.value as Car;
+
+    const formValue = this.carForm.value;
+      const carData: Car = 
+      {...formValue, year: formValue.year ?? undefined} as Car
+      
       console.log('Submitted Car:', carData);
       
       this.carService.addCar(carData).subscribe({

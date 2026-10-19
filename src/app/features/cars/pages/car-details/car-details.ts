@@ -1,31 +1,31 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Component, inject, input, signal } from '@angular/core';
+
 import { Car } from '../../models/car';
 import { CarService } from '../../services/car.service';
 import { Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
+
 
 @Component({
   selector: 'app-car-details',
-  imports: [AsyncPipe],
+  imports: [],
   templateUrl: './car-details.html',
   styleUrl: './car-details.scss',
 })
-export class CarDetails  implements OnInit {
-  private route = inject(ActivatedRoute);
+export class CarDetails {
+
+
   private carService = inject(CarService);
 
-  car$ : Observable<Car> | undefined
-  loading = true;
-  error = '';
+    readonly id = input.required<string>();
 
-  ngOnInit(): void {
-    
-    const id = this.route.snapshot.paramMap.get('id');
+   readonly car = signal<Car | null>(null);
 
-    if (id) {
-    this.car$ = this.carService.getCarById(id)
+    ngOnInit(): void {
+    this.carService.getCarById(this.id()).subscribe(car => {
+      this.car.set(car);
+    });
 
-    }
   }
 }
+
