@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { CarService } from '../../services/car.service';
 import { Observable } from 'rxjs';
@@ -17,8 +17,14 @@ private carService = inject(CarService);
   
   cars$!: Observable<Car[]>;
 
+  cars2 = signal<Car[]>([]);
+
   ngOnInit(): void {
     this.cars$ = this.carService.getCars();
+
+    this.carService.getCars().subscribe(cars => {
+      this.cars2.set(cars);
+    });
   }
 }
 
