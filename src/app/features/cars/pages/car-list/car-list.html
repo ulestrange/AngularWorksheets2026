@@ -1,7 +1,26 @@
 
 
 <div class="car-list-container">
-      <h2>Car Inventory</h2>
+      <h2>Car Inventory using signals</h2>
+
+      @if (cars2(); as cars) {
+        @if (cars.length > 0) {
+          <div class="grid">
+            @for (car of cars; track car._id) {
+             <app-car-card [car]="car" />
+            }
+        </div>
+        } @else {
+          <p>No cars available at the moment.</p>
+        }
+      } @else {
+        <p>Loading cars...</p>
+      }
+    </div>
+
+
+<div class="car-list-container">
+      <h2>Car Inventory using observables and async pipe</h2>
 
       @if (cars$ | async; as cars) {
         @if (cars.length > 0) {
