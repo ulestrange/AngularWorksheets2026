@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, delay, Observable, throwError } from 'rxjs';
 import { Car, CreateCarDto } from '../models/car';
 
 @Injectable({
@@ -14,7 +14,7 @@ private http = inject(HttpClient);
 private readonly apiUrl = 'http://localhost:3006/api/v1/cars'; // this should be read from an env variable we will leave it for now.
 
   getCars(): Observable<Car[]> {
-    return this.http.get<Car[]>(this.apiUrl)
+    return this.http.get<Car[]>(this.apiUrl); 
   }
 
 
