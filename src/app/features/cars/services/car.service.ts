@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { Car } from '../models/car';
+import { Car, CreateCarDto } from '../models/car';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,7 @@ private readonly apiUrl = 'http://localhost:3006/api/v1/cars'; // this should be
     return this.http.get<Car>(`${this.apiUrl}/${id}`);
   }
 
-   addCar(car: Car): Observable<Car> {
+   addCar(car: CreateCarDto): Observable<Car> {
     return this.http.post<Car>(this.apiUrl, car)
     .pipe(
       catchError(this.handleError)
