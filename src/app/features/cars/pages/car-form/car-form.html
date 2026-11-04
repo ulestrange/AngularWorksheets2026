@@ -39,7 +39,7 @@
   </div>
 
   <!-- Action Buttons -->
-  <p> {{saveError()}}</p>
+  @if (saveError(); as message) { <p role="alert">{{ message }}</p> }
 
   <div class="button-group">
     <button type="submit" [disabled]="saving()">

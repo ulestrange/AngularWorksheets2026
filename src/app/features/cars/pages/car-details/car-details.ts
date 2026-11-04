@@ -20,11 +20,13 @@ export class CarDetails {
 
   readonly id = input.required<string>();
 
+  readonly initial: LoadState<Car> = { status: 'loading' };
+
   state = toSignal(
     toObservable(this.id).pipe(
       switchMap((id) => withLoadState(this.carService.getCarById(id))),
     ),
-    { initialValue: { status: 'loading' } as LoadState<Car> },
+    { initialValue: this.initial },
   );
 
 }
