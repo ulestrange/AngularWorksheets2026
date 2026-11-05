@@ -35,11 +35,6 @@
   </mat-form-field>
 
 
-  <!-- @if (carForm.get('model')?.invalid && carForm.get('model')?.touched) {
-      <div class="error">
-        Model is required.
-      </div>
-    } -->
 
 
   <!-- Year Field -->
@@ -47,12 +42,12 @@
     <mat-label>Year</mat-label>
     <input matInput type="number" formControlName="year" />
     <mat-hint>Optional</mat-hint>
+        @if (carForm.controls.year.hasError('min')) {
+    <mat-error>Year must be at least 1950</mat-error>
+    } @else if (carForm.controls.year.hasError('max')) {
+    <mat-error>Year must be {{ currentYear + 1 }} or earlier</mat-error>
+    }
   </mat-form-field>
-  <!-- @if (carForm.get('year')?.invalid && carForm.get('year')?.touched) {
-      <div class="error">
-        Please enter a valid car year.
-      </div>
-    } -->
 
 
   <!-- Action Buttons -->
