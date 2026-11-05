@@ -1,5 +1,7 @@
 <form [formGroup]="carForm" (ngSubmit)="onSubmit()" class="car-form">
-  <h2>Car Details Form</h2>
+
+
+  <h2>{{ id() ? 'Edit car' : 'Add a car' }}</h2>
 
   @if (saving()) {
   <mat-progress-bar mode="buffer" />
