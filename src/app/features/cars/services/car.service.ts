@@ -13,10 +13,10 @@ export class CarService {
 
   private readonly apiUrl = 'http://localhost:3006/api/v1/cars'; // this should be read from an env variable we will leave it for now.
 
-getCars(): Observable<Car[]> {
-  return this.http
-    .get<Car[]>(this.apiUrl)
-}
+  getCars(): Observable<Car[]> {
+    return this.http
+      .get<Car[]>(this.apiUrl)
+  }
 
 
   getCarById(id: string): Observable<Car> {
@@ -25,11 +25,15 @@ getCars(): Observable<Car[]> {
 
   addCar(car: CreateCarDto): Observable<Car> {
     return this.http.post<Car>(this.apiUrl, car)
- 
+
   }
   updateCar(id: string, changes: UpdateCarDto): Observable<Car> {
-  return this.http.put<Car>(`${this.apiUrl}/${id}`, changes);
-}
+    return this.http.put<Car>(`${this.apiUrl}/${id}`, changes);
+  }
+
+  deleteCar(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 
 
 
