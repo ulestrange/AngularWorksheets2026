@@ -84,7 +84,7 @@ export class CarForm {
     request.subscribe({
       next: (response) => {
         this.snackBar.open(`${newCar.make} ${newCar.model} saved`, 'Close', { duration: 10000 });
-        console.log('Car added successfully:', response);
+        console.log('Car added or edited successfully:', response);
         this.router.navigate(['/cars']);
       },
       error: (err: Error) => {

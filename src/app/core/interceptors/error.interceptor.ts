@@ -13,6 +13,8 @@ export function friendlyMessage(error: HttpErrorResponse): string {
       return 'You are not allowed to do that.';
     case 404:
       return 'The item you asked for could not be found.';
+    case 409:
+      return 'The item you are trying to create already exists.';
     default:
       return 'Something went wrong on the server. Please try again later.';
   }
