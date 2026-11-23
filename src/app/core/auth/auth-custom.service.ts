@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 import { environment } from '../../../environments/environment';
-import { RegisterUserDto, User } from '../models/user';
+import { LoginUserDto, RegisterUserDto, User } from '../models/user';
 import { Router } from '@angular/router';
 import { Observable, map, tap } from 'rxjs';
 
@@ -43,9 +43,9 @@ private readonly apiUrl = `${environment.apiUri}/auth`
   }
 
 
-  login(email: string, password: string): Observable<User> {
+  login(userCredentials: LoginUserDto): Observable<User> {
     return this.http
-      .post<AuthResponse>(`${this.apiUrl}/login`, { email, password })
+      .post<AuthResponse>(`${this.apiUrl}/login`, { userCredentials })
       .pipe(
         tap(res => {
           this._token.set(res.token);

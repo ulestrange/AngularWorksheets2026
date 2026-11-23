@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthCustomService } from '../../../../core/auth/auth-custom.service';
+import { LoginUserDto } from '../../../../core/models/user';
 
 @Component({
   selector: 'app-login',
@@ -32,10 +33,11 @@ export class LoginComponent {
     if (this.loginForm.invalid) return;
 
     const { email, password } = this.loginForm.getRawValue();
+    const userCredentials : LoginUserDto = {email,  password}
     this.submitting.set(true);
 
     this.authService
-      .login(email, password)
+      .login(userCredentials)
       .pipe(finalize(() => this.submitting.set(false)))
       .subscribe({
         next: () => this.router.navigateByUrl('/'),
