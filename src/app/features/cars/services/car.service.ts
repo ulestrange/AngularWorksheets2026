@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, delay, Observable, throwError } from 'rxjs';
 import { Car, CreateCarDto, UpdateCarDto } from '../models/car';
+import { environment } from '../../../../environments/environment'
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +12,10 @@ export class CarService {
 
   private http = inject(HttpClient);
 
-  private readonly apiUrl = 'http://localhost:3006/api/v1/cars'; // this should be read from an env variable we will leave it for now.
+  private readonly apiUrl = `${environment.apiUri}/cars`
 
   getCars(): Observable<Car[]> {
+
     return this.http
       .get<Car[]>(this.apiUrl)
   }

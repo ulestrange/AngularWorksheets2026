@@ -2,7 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 
-//import { environment } from '../environments/environment';
+import { environment } from '../../../environments/environment';
 import { RegisterUserDto, User } from '../models/user';
 import { Router } from '@angular/router';
 import { Observable, map, tap } from 'rxjs';
@@ -18,8 +18,7 @@ interface AuthResponse {
 })
 export class AuthCustomService {
 
-  private readonly apiUrl = 'http://localhost:3006/api/v1/auth'; // this should be read from an env variable we will leave it for now.
-
+private readonly apiUrl = `${environment.apiUri}/auth`
 
   private http = inject(HttpClient);
   private router = inject(Router);

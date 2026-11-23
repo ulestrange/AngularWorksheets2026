@@ -52,27 +52,33 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve": {
-          "builder": "@angular/build:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "AngularWorksheets2026:build:production"
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
+              }         
             },
-            "development": {
-              "buildTarget": "AngularWorksheets2026:build:development"
-            }
+            "defaultConfiguration": "production"
           },
-          "defaultConfiguration": "development"
-        },
-        "test": {
-          "builder": "@angular/build:unit-test"
+          "serve": {
+            "builder": "@angular/build:dev-server",
+            "configurations": {
+              "production": {
+                "buildTarget": "AngularWorksheets2026:build:production"
+              },
+              "development": {
+                "buildTarget": "AngularWorksheets2026:build:development"
+              }
+            },
+            "defaultConfiguration": "development"
+          },
+          "test": {
+            "builder": "@angular/build:unit-test"
+          }
         }
       }
     }
   }
-}
