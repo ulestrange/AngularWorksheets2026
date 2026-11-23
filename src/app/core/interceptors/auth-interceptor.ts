@@ -11,7 +11,7 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
 
   const apiUri = `http://localhost:3006/api/v1`;
 
-  const jwt = localStorage.getItem('token');
+  const jwt = authService.token;
 
   // we don't want to attach our token to a request to any other server
   // so we check that the request is to our own api
