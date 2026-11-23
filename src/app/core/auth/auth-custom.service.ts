@@ -45,7 +45,7 @@ private readonly apiUrl = `${environment.apiUri}/auth`
 
   login(userCredentials: LoginUserDto): Observable<User> {
     return this.http
-      .post<AuthResponse>(`${this.apiUrl}/login`, { userCredentials })
+      .post<AuthResponse>(`${this.apiUrl}/login`,  userCredentials )
       .pipe(
         tap(res => {
           this._token.set(res.token);

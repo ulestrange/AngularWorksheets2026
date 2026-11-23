@@ -1,11 +1,12 @@
 import { Component, inject, Injectable, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { AuthCustomService } from './core/auth/auth-custom.service';
-//import { CarList } from './features/cars/pages/car-list/car-list';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink, MatButtonModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
