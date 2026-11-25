@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { CarCard } from '../car-card/car-card';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { withLoadState } from '../../../../shared/load-state';
-import { AuthCustomService } from '../../../../core/auth/auth-custom.service';
+
 
 @Component({
   selector: 'app-car-list',
@@ -16,6 +16,7 @@ import { AuthCustomService } from '../../../../core/auth/auth-custom.service';
 export class CarList  {
 
 private carService = inject(CarService);
+
 
   
 

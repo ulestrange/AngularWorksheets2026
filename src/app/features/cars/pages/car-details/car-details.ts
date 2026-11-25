@@ -8,6 +8,7 @@ import { LoadState, withLoadState } from '../../../../shared/load-state';
 import { RouterLink, Router } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
+import { AuthCustomService } from '../../../../core/auth/auth-custom.service';
 
 
 @Component({
@@ -21,6 +22,9 @@ export class CarDetails {
   private readonly router = inject(Router);
 
   private carService = inject(CarService);
+
+  private authService = inject(AuthCustomService);
+  isAuthenicated = this.authService.isAuthenticated;
 
   readonly id = input.required<string>();
 
