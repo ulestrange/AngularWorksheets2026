@@ -10,7 +10,15 @@ import { Observable, finalize, map, shareReplay, tap } from 'rxjs';
 
 interface AuthResponse {
   token: string;
-  user: User;
+}
+
+// What the API puts inside the JWT payload
+interface TokenPayload {
+  sub: string;
+  email: string;
+  name: string;
+  iat: number; // issued at (seconds since 1970)
+  exp: number; // expires at (seconds since 1970)
 }
 
 @Injectable({
@@ -49,32 +57,25 @@ private readonly apiUrl = `${environment.apiUri}/auth`
   }
 
 
-  login(userCredentials: LoginUserDto): Observable<User> {
-    return this.http
-      // withCredentials lets the browser store the refresh-token cookie
+
+        // withCredentials lets the browser store the refresh-token cookie
       // that the API (a different origin: port 3006) sends back
 
+  login(userCredentials: LoginUserDto): Observable<void> {
+    return this.http
       .post<AuthResponse>(`${this.apiUrl}/login`,  userCredentials, { withCredentials: true } )
       .pipe(
-        tap(res => {
-          // this._token.set(res.token);
-          // this._currentUser.set(res.user);
-          // this.startExpiryTimer(res.token);
-          this.setSession(res)
-        }),
-        map(res => res.user)
+        tap(res => this.setSession(res)),
+        map(res => undefined)
       );
   }
 
   logout(): void {
-   // clearTimeout(this.expiryTimer);
-    // this._token.set(null);
-    
     this.http
       .post(`${this.apiUrl}/logout`, {}, { withCredentials: true })
       .subscribe({ error: () => {} });
 
-    this.clearSession();
+     this.clearSession();
 
      this.router.navigate(['/login']);
   }
@@ -92,10 +93,17 @@ private readonly apiUrl = `${environment.apiUri}/auth`
 
   // Instead of logging the user out when the access token expires,
   // get a new one shortly before it expires.
-  private scheduleRefresh(token: string): void {
-    // the payload is readable by anyone: never put secrets in it
+
+
+  // The payload is only Base64URL-encoded, not encrypted: anyone can read it,
+  // so never put secrets in it. The API still verifies the signature on every request.
+  private decodeToken(token: string): TokenPayload {
     const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-    const payload = JSON.parse(atob(base64));
+    return JSON.parse(atob(base64)) as TokenPayload;
+  }
+
+  private scheduleRefresh(payload: TokenPayload): void {
+
     const msLeft = payload.exp * 1000 - Date.now();
     const refreshIn = Math.max(msLeft - 30_000, 0); // 30 seconds early
 
@@ -106,9 +114,16 @@ private readonly apiUrl = `${environment.apiUri}/auth`
   }
 
   private setSession(res: AuthResponse): void {
+
+
     this._token.set(res.token);
-    this._currentUser.set(res.user);
-    this.scheduleRefresh(res.token);
+    const payload = this.decodeToken(res.token);
+    this._currentUser.set({
+      _id : payload.sub,
+      name: payload.name,
+      email: payload.email});
+
+    this.scheduleRefresh(payload);
   }
 
     private clearSession(): void {
